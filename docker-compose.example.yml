@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  cups-server:
+    image: dipi/cups-server:latest
+    # Or use: dipi/cups-server:brother for pre-installed Brother driver
+    container_name: cups-print-server
+    restart: unless-stopped
+    
+    environment:
+      - TZ=America/Sao_Paulo
+      - CUPSADMIN=admin
+      - CUPSPASSWORD=changeme
+      
+      # Optional: Install Brother driver at runtime
+      # - INSTALL_BROTHER_DRIVER=true
+      # - BROTHER_PRINTER_MODEL=HL-1210W
+      
+      # Optional: Skip USB validation check
+      # - SKIP_USB_CHECK=true
+      
+    ports:
+      - "631:631"
+      
+    # USB device passthrough (required for USB printers)
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+      
+    # Required for USB access
+    privileged: true
+    
+    volumes:
+      # Optional: Persist CUPS configuration
+      - cups_config:/etc/cups
+      - cups_spool:/var/spool/cups
+      - cups_cache:/var/cache/cups
+      
+      # Optional: Custom CUPS configuration
+      # - ./cupsd.conf:/etc/cups/cupsd.conf:ro
+
+volumes:
+  cups_config:
+  cups_spool:
+  cups_cache:
