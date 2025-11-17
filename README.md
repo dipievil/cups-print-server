@@ -100,6 +100,7 @@ docker run -d \
 ### Supported Brother Models
 
 The installer supports most Brother printer models. Common models include:
+
 - HL-1210W, HL-1212W
 - HL-2270DW, HL-2280DW
 - DCP-L2540DW, DCP-L2550DW
@@ -209,18 +210,21 @@ docker logs cups-server | grep "Validation Summary"
 ### Printer Not Detected
 
 1. **Check USB permissions:**
+
    ```bash
    ls -la /dev/bus/usb/*/*
    # Should show rw-rw-rw- permissions
    ```
 
 2. **Verify USB passthrough:**
+
    ```bash
    docker exec cups-server lsusb
    # Should list your printer
    ```
 
 3. **Check CUPS backends:**
+
    ```bash
    docker exec cups-server lpinfo -v
    # Should show usb:// devices
@@ -229,17 +233,20 @@ docker logs cups-server | grep "Validation Summary"
 ### Cannot Access Web Interface
 
 1. **Check if CUPS is running:**
+
    ```bash
    docker exec cups-server pgrep cupsd
    ```
 
 2. **Verify port binding:**
+
    ```bash
    docker port cups-server
    # Should show 631/tcp -> 0.0.0.0:631
    ```
 
 3. **Test connection:**
+
    ```bash
    curl -I http://localhost:631
    ```
@@ -279,14 +286,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - 🐛 [Report Issues](https://github.com/dipievil/cups-print-server/issues)
 - 💬 [Discussions](https://github.com/dipievil/cups-print-server/discussions)
-- 📧 Email: your.email@example.com
 
 ## 🔗 Links
 
 - [Docker Hub](https://hub.docker.com/r/dipi/cups-server)
 - [GitHub Repository](https://github.com/dipievil/cups-print-server)
-- [Documentation](https://github.com/dipievil/cups-print-server/wiki)
 
 ---
 
-Made with ❤️ by [dipievil](https://github.com/dipievil)
+Made by [dipievil](https://github.com/dipievil)
